@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>TomiEckert</Authors>
+        <Title>TomsConfig</Title>
+        <PackageVersion>1.0</PackageVersion>
+        <AssemblyVersion>1.0</AssemblyVersion>
+        <NeutralLanguage>en</NeutralLanguage>
+        <RepositoryUrl>https://github.com/TomiEckert/TomsConfig</RepositoryUrl>
+        <FileVersion>1.0</FileVersion>
+        <PackageTags>config, simple</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
+
+</Project>

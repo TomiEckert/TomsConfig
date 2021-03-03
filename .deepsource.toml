@@ -1,0 +1,18 @@
+version = 1
+
+test_patterns = ["LoggerTest/*"]
+
+exclude_patterns = [
+    ".github/**",
+    ".gitignore",
+    "TomsLogger.sln",
+    "global.json"
+]
+
+[[analyzers]]
+name = "test-coverage"
+enabled = true
+
+[[analyzers]]
+name = "secrets"
+enabled = true
