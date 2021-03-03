@@ -5,11 +5,12 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>TomiEckert</Authors>
         <Title>TomsConfig</Title>
-        <PackageVersion>1.0</PackageVersion>
-        <AssemblyVersion>1.0</AssemblyVersion>
+		<Description>A simple config processing utility.</Description>
+        <PackageVersion>1.1</PackageVersion>
+        <AssemblyVersion>1.1</AssemblyVersion>
         <NeutralLanguage>en</NeutralLanguage>
         <RepositoryUrl>https://github.com/TomiEckert/TomsConfig</RepositoryUrl>
-        <FileVersion>1.0</FileVersion>
+        <FileVersion>1.1</FileVersion>
         <PackageTags>config, simple</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
