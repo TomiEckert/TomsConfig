@@ -20,7 +20,7 @@ jobs:
         dotnet-version: 3.1.x
         source-url: https://api.nuget.org/v3/index.json
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore -s https://api.nuget.org/v3/index.json
     - name: Build
       run: dotnet build --no-restore
     - name: Test
