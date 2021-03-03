@@ -2,13 +2,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using TomsConfig.Model;
 
 namespace TomsConfig {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     public static class ConfigReader {
-        public static Config ReadFile(string path) {
+        public static IConfig ReadFile(string path) {
             if (!File.Exists(path))
                 throw new FileNotFoundException("The file '" + path + "' was not found.");
 
@@ -16,13 +17,13 @@ namespace TomsConfig {
             return Read(s);
         }
 
-        public static Config Read(string s) {
+        public static IConfig Read(string s) {
             return Parse(s);
         }
 
-        private static Config Parse(string s) {
-            var config = new Config();
-            var block = new ConfigBlock();
+        private static IConfig Parse(string s) {
+            IConfig config = new Config();
+            IConfigBlock block = new ConfigBlock();
             var lines = GetLines(s);
 
             if (!IsBlock(lines[0], out var name))
@@ -54,7 +55,7 @@ namespace TomsConfig {
             return true;
         }
 
-        private static bool IsItem(string line, out string name, out ConfigItem item) {
+        private static bool IsItem(string line, out string name, out IConfigItem item) {
             name = null;
             item = null;
 
