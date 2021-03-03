@@ -50,14 +50,6 @@ namespace TomsConfig {
             return ParseParsable(s, double.Parse);
         }
 
-        internal static float[] ParseFloat(string s) {
-            return ParseParsable(s, float.Parse);
-        }
-
-        internal static long[] ParseLong(string s) {
-            return ParseParsable(s, long.Parse);
-        }
-
         internal static bool[] ParseBool(string s) {
             return ParseParsable(s, bool.Parse);
         }
