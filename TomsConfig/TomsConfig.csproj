@@ -6,11 +6,11 @@
         <Authors>TomiEckert</Authors>
         <Title>TomsConfig</Title>
 		<Description>A simple config processing utility.</Description>
-        <PackageVersion>1.1</PackageVersion>
-        <AssemblyVersion>1.1</AssemblyVersion>
+        <PackageVersion>1.2</PackageVersion>
+        <AssemblyVersion>1.2</AssemblyVersion>
         <NeutralLanguage>en</NeutralLanguage>
         <RepositoryUrl>https://github.com/TomiEckert/TomsConfig</RepositoryUrl>
-        <FileVersion>1.1</FileVersion>
+        <FileVersion>1.2</FileVersion>
         <PackageTags>config, simple</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
