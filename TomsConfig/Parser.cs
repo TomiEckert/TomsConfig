@@ -45,7 +45,7 @@ namespace TomsConfig {
         string[] IParser.GetStrings() {
             if (!_arrayOpen.Contains(_value[0]) ||
                 !_arrayClose.Contains(_value[^1]))
-                throw new Exception("Arrays start or end character is not correct");
+                throw new FormatException("Arrays start or end character is not correct");
             var pure = _value.Substring(1, _value.Length - 2);
 
             var temp = pure.Split(_quotes[0])
@@ -60,7 +60,7 @@ namespace TomsConfig {
             if (s[0] != s[^1] ||
                 !_quotes.Contains(s[0]) ||
                 !_quotes.Contains(s[^1]))
-                throw new Exception("Strings start or end characters do not match");
+                throw new FormatException("Strings start or end characters do not match");
 
             return s.Substring(1, s.Length - 2);
         }
@@ -68,7 +68,7 @@ namespace TomsConfig {
         private T[] ParseParsable<T>(string s, Func<string, T> func) {
             if (!_arrayOpen.Contains(s[0]) ||
                 !_arrayClose.Contains(s[^1]))
-                throw new Exception("Arrays start or end character is not correct");
+                throw new FormatException("Arrays start or end character is not correct");
 
             var parts = s.Substring(1, s.Length - 2).Split(',');
             var result = parts.Select(x => func(x.Trim()));

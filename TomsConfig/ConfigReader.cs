@@ -38,7 +38,7 @@ namespace TomsConfig {
             var lines = GetLines(s);
 
             if (!IsBlock(lines[0], out var name))
-                throw new Exception("First line of config is not a block");
+                throw new FormatException("First line of config is not a block");
 
             for (var i = 1; i < lines.Length; i++) {
                 var line = lines[i].Trim();
