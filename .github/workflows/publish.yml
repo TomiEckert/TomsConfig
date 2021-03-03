@@ -25,4 +25,6 @@ jobs:
     - name: Build NUPKG
       run: dotnet build -c Release --no-restore
     - name: Publish NuGet
-      run: dotnet nuget push TomsConfig/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source "https://api.nuget.org/v3/index.json"
+      run: dotnet nuget push TomsConfig/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source "nuget.org"
+    - name: Publish Github packages
+      run: dotnet nuget push TomsConfig/bin/Release/*.nupkg --api-key ${{ secrets.GH_PACKAGES_KEY }} --source "github"
