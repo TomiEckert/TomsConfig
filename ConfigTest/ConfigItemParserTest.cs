@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using NUnit.Framework;
 using TomsConfig;
 using TomsConfig.Model;
@@ -10,12 +11,12 @@ namespace ConfigTest {
         private readonly Random _r = new Random();
 
         private IConfig CreateConfig<T>(IReadOnlyList<T> array) {
-            var configCode = "[test]\n";
+            var configCode = new StringBuilder("[test]\n");
             for (var i = 0; i < array.Count; i++) {
-                configCode += i + " = " + array[i] + "\n";
+                configCode.Append(i + " = " + array[i] + "\n");
             }
 
-            return ConfigReader.Read(configCode);
+            return ConfigReader.Read(configCode.ToString());
         }
 
         private IConfig Setup<T>(T[] array, Func<T> func) {
@@ -27,12 +28,12 @@ namespace ConfigTest {
         }
 
         private IConfig CreateArrayConfig<T>(IReadOnlyList<T[]> array) {
-            var configCode = "[test]\n";
+            var configCode = new StringBuilder("[test]\n");
             for (var i = 0; i < array.Count; i++) {
-                configCode += i + " = [" + string.Join(", ", array[i]) + "]\n";
+                configCode.Append(i + " = [" + string.Join(", ", array[i]) + "]\n");
             }
 
-            return ConfigReader.Read(configCode);
+            return ConfigReader.Read(configCode.ToString());
         }
 
         private IConfig SetupArray<T>(T[][] array, Func<T> func) {
