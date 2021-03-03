@@ -12,34 +12,26 @@ namespace ConfigTest {
 
         private IConfig CreateConfig<T>(IReadOnlyList<T> array) {
             var configCode = new StringBuilder("[test]\n");
-            for (var i = 0; i < array.Count; i++) {
-                configCode.Append(i + " = " + array[i] + "\n");
-            }
+            for (var i = 0; i < array.Count; i++) configCode.Append(i + " = " + array[i] + "\n");
 
             return ConfigReader.Read(configCode.ToString());
         }
 
         private IConfig Setup<T>(T[] array, Func<T> func) {
-            for (var i = 0; i < array.Length; i++) {
-                array[i] = func();
-            }
+            for (var i = 0; i < array.Length; i++) array[i] = func();
 
             return CreateConfig(array);
         }
 
         private IConfig CreateArrayConfig<T>(IReadOnlyList<T[]> array) {
             var configCode = new StringBuilder("[test]\n");
-            for (var i = 0; i < array.Count; i++) {
-                configCode.Append(i + " = [" + string.Join(", ", array[i]) + "]\n");
-            }
+            for (var i = 0; i < array.Count; i++) configCode.Append(i + " = [" + string.Join(", ", array[i]) + "]\n");
 
             return ConfigReader.Read(configCode.ToString());
         }
 
         private IConfig SetupArray<T>(T[][] array, Func<T> func) {
-            for (var i = 0; i < array.Length; i++) {
-                array[i] = new[] {func(), func(), func()};
-            }
+            for (var i = 0; i < array.Length; i++) array[i] = new[] {func(), func(), func()};
 
             return CreateArrayConfig(array);
         }
@@ -49,19 +41,17 @@ namespace ConfigTest {
             var values = new int[ARRAY_SIZE];
             var config = Setup(values, () => _r.Next());
 
-            for (var i = 0; i < values.Length; i++) {
+            for (var i = 0; i < values.Length; i++)
                 Assert.AreEqual(values[i], config["test"][i.ToString()].GetParser().GetInt());
-            }
         }
 
         [Test]
         public void TestDouble() {
             var array = new double[ARRAY_SIZE];
-            var config = Setup(array, () => _r.NextDouble() * 5000 - 2500);
+            var config = Setup(array, () => (_r.NextDouble() * 5000) - 2500);
 
-            for (var i = 0; i < array.Length; i++) {
+            for (var i = 0; i < array.Length; i++)
                 Assert.AreEqual(array[i], config["test"][i.ToString()].GetParser().GetDouble());
-            }
         }
 
         [Test]
@@ -69,9 +59,8 @@ namespace ConfigTest {
             var array = new bool[ARRAY_SIZE];
             var config = Setup(array, () => _r.Next(2) == 1);
 
-            for (var i = 0; i < array.Length; i++) {
+            for (var i = 0; i < array.Length; i++)
                 Assert.AreEqual(array[i], config["test"][i.ToString()].GetParser().GetBool());
-            }
         }
 
         [Test]
@@ -79,9 +68,8 @@ namespace ConfigTest {
             var array = new string[ARRAY_SIZE];
             var config = Setup(array, () => "'" + _r.Next() + "'");
 
-            for (var i = 0; i < array.Length; i++) {
+            for (var i = 0; i < array.Length; i++)
                 Assert.AreEqual(array[i], "'" + config["test"][i.ToString()].GetParser().GetString() + "'");
-            }
         }
 
         [Test]
@@ -89,19 +77,17 @@ namespace ConfigTest {
             var array = new int[ARRAY_SIZE][];
             var config = SetupArray(array, () => _r.Next());
 
-            for (var i = 0; i < array.Length; i++) {
+            for (var i = 0; i < array.Length; i++)
                 Assert.AreEqual(array[i], config["test"][i.ToString()].GetParser().GetInts());
-            }
         }
 
         [Test]
         public void TestDoubleArray() {
             var array = new double[ARRAY_SIZE][];
-            var config = SetupArray(array, () => _r.NextDouble() + 5000 - 2500);
+            var config = SetupArray(array, () => (_r.NextDouble() + 5000) - 2500);
 
-            for (var i = 0; i < array.Length; i++) {
+            for (var i = 0; i < array.Length; i++)
                 Assert.AreEqual(array[i], config["test"][i.ToString()].GetParser().GetDoubles());
-            }
         }
 
         [Test]
@@ -109,9 +95,8 @@ namespace ConfigTest {
             var array = new bool[ARRAY_SIZE][];
             var config = SetupArray(array, () => _r.NextDouble() > .5);
 
-            for (var i = 0; i < array.Length; i++) {
+            for (var i = 0; i < array.Length; i++)
                 Assert.AreEqual(array[i], config["test"][i.ToString()].GetParser().GetBools());
-            }
         }
 
         [Test]

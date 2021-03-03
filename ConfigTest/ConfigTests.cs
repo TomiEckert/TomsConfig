@@ -6,7 +6,7 @@ using TomsConfig.Model;
 namespace ConfigTest {
     public class ConfigTests {
         private IConfig _config;
-        
+
         [SetUp]
         public void Setup() {
             _config = ConfigReader.Read(@"[test1]
@@ -54,7 +54,7 @@ b = 1");
         public void TestGetBlocks() {
             CollectionAssert.AreEquivalent(new[] {"test1", "test2", "test3"}, _config.GetBlocks());
         }
-        
+
         [Test]
         public void TestGetItems() {
             CollectionAssert.AreEquivalent(new[] {"n1", "n2", "n3"}, _config["test1"].GetItems());

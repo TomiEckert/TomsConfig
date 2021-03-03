@@ -10,11 +10,12 @@ namespace TomsConfig {
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     public static class ConfigReader {
         private static IConfigFactory configFactory;
-        
+
         public static IConfig ReadFile(string path, IConfigFactory factory) {
             configFactory = factory;
             return ReadFile(path);
         }
+
         public static IConfig ReadFile(string path) {
             if (!File.Exists(path))
                 throw new FileNotFoundException("The file '" + path + "' was not found.");
@@ -27,6 +28,7 @@ namespace TomsConfig {
             configFactory = factory;
             return Parse(s);
         }
+
         public static IConfig Read(string s) {
             configFactory ??= new ConfigFactory();
             return Parse(s);

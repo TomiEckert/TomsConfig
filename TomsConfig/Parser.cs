@@ -5,9 +5,9 @@ using System.Linq;
 namespace TomsConfig {
     [SuppressMessage("ReSharper", "ConvertIfStatementToSwitchStatement")]
     public class Parser : IParser {
-        private readonly char[] _quotes = {'"', '\''};
-        private readonly char[] _arrayOpen = {'[', '(', '{'};
         private readonly char[] _arrayClose = {']', ')', '}'};
+        private readonly char[] _arrayOpen = {'[', '(', '{'};
+        private readonly char[] _quotes = {'"', '\''};
         private string _value;
 
         void IParser.SetValue(string value) {
@@ -55,7 +55,7 @@ namespace TomsConfig {
                            .Where(x => x.Trim() != string.Empty);
             return temp.ToArray();
         }
-        
+
         private string ParseString(string s) {
             if (s[0] != s[^1] ||
                 !_quotes.Contains(s[0]) ||
