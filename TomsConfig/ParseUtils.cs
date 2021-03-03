@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace TomsConfig {
     [SuppressMessage("ReSharper", "ConvertIfStatementToSwitchStatement")]
-    internal static class ParseUtils {
+    public static class ParseUtils {
         private static readonly char[] _quotes = {'"', '\''};
-        private static readonly char[] _separators = {','};
         private static readonly char[] _arrayOpen = {'[', '(', '{'};
         private static readonly char[] _arrayClose = {']', ')', '}'};
 
@@ -20,58 +18,28 @@ namespace TomsConfig {
             return s.Substring(1, s.Length - 2);
         }
 
-        // ReSharper disable once CognitiveComplexity
         internal static string[] ParseStringArray(string s) {
             if (!_arrayOpen.Contains(s[0]) ||
                 !_arrayClose.Contains(s[^1]))
                 throw new Exception("Arrays start or end character is not correct");
+            var pure = s.Substring(1, s.Length - 2);
 
-            var items = new List<string>();
-            var current = string.Empty;
-            var quote = '\0';
-            for (var i = 1; i < s.Length - 2; i++)
-                if (quote == '\0' && _separators.Contains(s[i])) {
-                    items.Add(Parse(current));
-                    current = string.Empty;
-                }
-                else if (quote == '\0' && _quotes.Contains(s[i])) {
-                    current += s[i];
-                    quote = s[i];
-                }
-                else if (quote != '\0' && quote == s[i]) {
-                    current += s[i];
-                    quote = '\0';
-                }
-                else if (quote != '\0') {
-                    current += s[i];
-                }
-                else if (char.IsLetterOrDigit(s[i])) {
-                    throw new Exception("Error while parsing string array");
-                }
-
-            items.Add(Parse(current));
-            return items.ToArray();
+            var temp = pure.Split(_quotes[0])
+                           .Select((x, i) => i % 2 == 0 ? x.Trim().Split(_quotes[1]) : new[] {x.Trim()}).First()
+                           .Select((x, i) => i % 2 == 0 ? x.Trim().Split(',') : new[] {x.Trim()})
+                           .Select(x => x[0])
+                           .Where(x => x.Trim() != string.Empty);
+            return temp.ToArray();
         }
-
 
         private static T[] ParseParsable<T>(string s, Func<string, T> func) {
             if (!_arrayOpen.Contains(s[0]) ||
                 !_arrayClose.Contains(s[^1]))
                 throw new Exception("Arrays start or end character is not correct");
 
-            var items = new List<T>();
-            var current = string.Empty;
-            for (var i = 1; i < s.Length - 2; i++)
-                if (_separators.Contains(s[i])) {
-                    items.Add(func(current.Trim()));
-                    current = string.Empty;
-                }
-                else {
-                    current += s[i];
-                }
-
-            items.Add(func(current.Trim()));
-            return items.ToArray();
+            var parts = s.Substring(1, s.Length - 2).Split(',');
+            var result = parts.Select(x => func(x.Trim()));
+            return result.ToArray();
         }
 
         internal static int[] ParseInt(string s) {
