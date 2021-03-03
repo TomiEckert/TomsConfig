@@ -1,7 +1,7 @@
 ﻿namespace TomsConfig.Model {
-    internal interface IConfigFactory {
-        internal IConfig CreateConfig();
-        internal IConfigBlock CreateBlock();
-        internal IConfigItem CreateItem(string value);
+    public interface IConfigFactory {
+        public IConfig CreateConfig();
+        public IConfigBlock CreateBlock();
+        public IConfigItem CreateItem(string value);
     }
 }

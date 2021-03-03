@@ -49,7 +49,7 @@ namespace ConfigTest {
             var config = Setup(values, () => _r.Next());
 
             for (var i = 0; i < values.Length; i++) {
-                Assert.AreEqual(values[i], config["test"][i.ToString()].GetInt());
+                Assert.AreEqual(values[i], config["test"][i.ToString()].GetParser().GetInt());
             }
         }
 
@@ -59,7 +59,7 @@ namespace ConfigTest {
             var config = Setup(array, () => _r.NextDouble() * 5000 - 2500);
 
             for (var i = 0; i < array.Length; i++) {
-                Assert.AreEqual(array[i], config["test"][i.ToString()].GetDouble());
+                Assert.AreEqual(array[i], config["test"][i.ToString()].GetParser().GetDouble());
             }
         }
 
@@ -69,7 +69,7 @@ namespace ConfigTest {
             var config = Setup(array, () => _r.Next(2) == 1);
 
             for (var i = 0; i < array.Length; i++) {
-                Assert.AreEqual(array[i], config["test"][i.ToString()].GetBool());
+                Assert.AreEqual(array[i], config["test"][i.ToString()].GetParser().GetBool());
             }
         }
 
@@ -79,7 +79,7 @@ namespace ConfigTest {
             var config = Setup(array, () => "'" + _r.Next() + "'");
 
             for (var i = 0; i < array.Length; i++) {
-                Assert.AreEqual(array[i], "'" + config["test"][i.ToString()].GetString() + "'");
+                Assert.AreEqual(array[i], "'" + config["test"][i.ToString()].GetParser().GetString() + "'");
             }
         }
 
@@ -89,7 +89,7 @@ namespace ConfigTest {
             var config = SetupArray(array, () => _r.Next());
 
             for (var i = 0; i < array.Length; i++) {
-                Assert.AreEqual(array[i], config["test"][i.ToString()].GetInts());
+                Assert.AreEqual(array[i], config["test"][i.ToString()].GetParser().GetInts());
             }
         }
 
@@ -99,7 +99,7 @@ namespace ConfigTest {
             var config = SetupArray(array, () => _r.NextDouble() + 5000 - 2500);
 
             for (var i = 0; i < array.Length; i++) {
-                Assert.AreEqual(array[i], config["test"][i.ToString()].GetDoubles());
+                Assert.AreEqual(array[i], config["test"][i.ToString()].GetParser().GetDoubles());
             }
         }
 
@@ -109,7 +109,7 @@ namespace ConfigTest {
             var config = SetupArray(array, () => _r.NextDouble() > .5);
 
             for (var i = 0; i < array.Length; i++) {
-                Assert.AreEqual(array[i], config["test"][i.ToString()].GetBools());
+                Assert.AreEqual(array[i], config["test"][i.ToString()].GetParser().GetBools());
             }
         }
 
@@ -119,7 +119,7 @@ namespace ConfigTest {
             var config = SetupArray(array, () => "'" + _r.Next() + "'");
 
             for (var i = 0; i < array.Length; i++) {
-                var result = string.Join(", ", config["test"][i.ToString()].GetStrings());
+                var result = string.Join(", ", config["test"][i.ToString()].GetParser().GetStrings());
                 Assert.AreEqual(string.Join(", ", array[i]).Replace("'", ""), result);
             }
         }
@@ -128,19 +128,19 @@ namespace ConfigTest {
         public void TestWrongStringFormat() {
             var c = ConfigReader.Read(@"[test]
 text = no quote");
-            Assert.Throws(typeof(Exception), () => c["test"]["text"].GetString());
+            Assert.Throws(typeof(Exception), () => c["test"]["text"].GetParser().GetString());
             c = ConfigReader.Read(@"[test]
 text = 'one quote");
-            Assert.Throws(typeof(Exception), () => c["test"]["text"].GetString());
+            Assert.Throws(typeof(Exception), () => c["test"]["text"].GetParser().GetString());
             c = ConfigReader.Read(@"[test]
 text = 'wrong quote""");
-            Assert.Throws(typeof(Exception), () => c["test"]["text"].GetString());
+            Assert.Throws(typeof(Exception), () => c["test"]["text"].GetParser().GetString());
             c = ConfigReader.Read(@"[test]
 text = 'good quote'");
-            Assert.DoesNotThrow(() => c["test"]["text"].GetString());
+            Assert.DoesNotThrow(() => c["test"]["text"].GetParser().GetString());
             c = ConfigReader.Read(@"[test]
 text = ""good quote""");
-            Assert.DoesNotThrow(() => c["test"]["text"].GetString());
+            Assert.DoesNotThrow(() => c["test"]["text"].GetParser().GetString());
         }
     }
 }

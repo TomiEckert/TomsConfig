@@ -1,14 +1,7 @@
 ﻿namespace TomsConfig.Model {
     public interface IConfigItem {
-        public bool Equals(ConfigItem item);
-        
-        public string GetString();
-        public int GetInt();
-        public double GetDouble();
-        public bool GetBool();
-        public string[] GetStrings();
-        public int[] GetInts();
-        public double[] GetDoubles();
-        public bool[] GetBools();
+        public bool Equals(IConfigItem item);
+        public IParser GetParser();
+        public object GetObject();
     }
 }

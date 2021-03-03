@@ -9,8 +9,12 @@ namespace TomsConfig {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     public static class ConfigReader {
-        private static IConfigFactory _configFactory;
+        private static IConfigFactory configFactory;
         
+        public static IConfig ReadFile(string path, IConfigFactory factory) {
+            configFactory = factory;
+            return ReadFile(path);
+        }
         public static IConfig ReadFile(string path) {
             if (!File.Exists(path))
                 throw new FileNotFoundException("The file '" + path + "' was not found.");
@@ -19,14 +23,18 @@ namespace TomsConfig {
             return Read(s);
         }
 
+        public static IConfig Read(string s, IConfigFactory factory) {
+            configFactory = factory;
+            return Parse(s);
+        }
         public static IConfig Read(string s) {
-            _configFactory = new ConfigFactory();
+            configFactory ??= new ConfigFactory();
             return Parse(s);
         }
 
         private static IConfig Parse(string s) {
-            var config = _configFactory.CreateConfig();
-            var block = _configFactory.CreateBlock();
+            var config = configFactory.CreateConfig();
+            var block = configFactory.CreateBlock();
             var lines = GetLines(s);
 
             if (!IsBlock(lines[0], out var name))
@@ -36,7 +44,7 @@ namespace TomsConfig {
                 var line = lines[i].Trim();
                 if (IsBlock(line, out var n)) {
                     config.Add(name, block);
-                    block = _configFactory.CreateBlock();
+                    block = configFactory.CreateBlock();
                     name = n;
                 }
                 else if (IsItem(line, out var iName, out var item)) {
@@ -69,7 +77,7 @@ namespace TomsConfig {
                 string.Join('=', split.Skip(1)).Trim().Length < 1) return false;
 
             name = split[0].Trim();
-            item = _configFactory.CreateItem(string.Join('=', split.Skip(1)).Trim());
+            item = configFactory.CreateItem(string.Join('=', split.Skip(1)).Trim());
             return true;
         }
 

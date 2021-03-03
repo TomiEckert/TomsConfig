@@ -9,7 +9,7 @@
         }
 
         IConfigItem IConfigFactory.CreateItem(string value) {
-            return new ConfigItem(value);
+            return new ConfigItem(value, new Parser());
         }
     }
 }

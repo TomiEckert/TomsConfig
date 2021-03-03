@@ -27,8 +27,8 @@ s3 = 'other text'");
 
         [Test]
         public void TestConfigWrongBlock() {
-            Assert.DoesNotThrow(() => _config["test1"]["n1"].GetInt());
-            Assert.Throws(typeof(InvalidOperationException), () => _config["wrong"]["n1"].GetInt());
+            Assert.DoesNotThrow(() => _config["test1"]["n1"].GetParser().GetInt());
+            Assert.Throws(typeof(InvalidOperationException), () => _config["wrong"]["n1"].GetParser().GetInt());
         }
 
         [Test]
@@ -37,7 +37,7 @@ s3 = 'other text'");
 a = 1
 a = 2
 a = 3");
-            Assert.AreEqual(3, _config["test"]["a"].GetInt());
+            Assert.AreEqual(3, _config["test"]["a"].GetParser().GetInt());
         }
 
         [Test]
@@ -46,8 +46,8 @@ a = 3");
 a = 1
 [test]
 b = 1");
-            Assert.Throws(typeof(InvalidOperationException), () => _config["test"]["a"].GetInt());
-            Assert.AreEqual(1, _config["test"]["b"].GetInt());
+            Assert.Throws(typeof(InvalidOperationException), () => _config["test"]["a"].GetParser().GetInt());
+            Assert.AreEqual(1, _config["test"]["b"].GetParser().GetInt());
         }
 
         [Test]
