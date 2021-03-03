@@ -114,13 +114,13 @@ namespace ConfigTest {
         public void TestWrongStringFormat() {
             var c = ConfigReader.Read(@"[test]
 text = no quote");
-            Assert.Throws(typeof(Exception), () => c["test"]["text"].GetParser().GetString());
+            Assert.Throws(typeof(FormatException), () => c["test"]["text"].GetParser().GetString());
             c = ConfigReader.Read(@"[test]
 text = 'one quote");
-            Assert.Throws(typeof(Exception), () => c["test"]["text"].GetParser().GetString());
+            Assert.Throws(typeof(FormatException), () => c["test"]["text"].GetParser().GetString());
             c = ConfigReader.Read(@"[test]
 text = 'wrong quote""");
-            Assert.Throws(typeof(Exception), () => c["test"]["text"].GetParser().GetString());
+            Assert.Throws(typeof(FormatException), () => c["test"]["text"].GetParser().GetString());
             c = ConfigReader.Read(@"[test]
 text = 'good quote'");
             Assert.DoesNotThrow(() => c["test"]["text"].GetParser().GetString());
