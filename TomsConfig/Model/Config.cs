@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace TomsConfig {
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public class Config {
+namespace TomsConfig.Model {
+    public class Config : IConfig {
         internal Config() {
-            _blocks = new Dictionary<string, ConfigBlock>();
+            _blocks = new Dictionary<string, IConfigBlock>();
         }
 
-        private readonly Dictionary<string, ConfigBlock> _blocks;
+        private readonly Dictionary<string, IConfigBlock> _blocks;
 
-        public ConfigBlock this[string name] {
+        IConfigBlock IConfig.this[string name] {
             get {
                 try {
                     var block = _blocks.Single(x => x.Key == name);
@@ -29,14 +27,14 @@ namespace TomsConfig {
             }
         }
 
-        internal void Add(string key, ConfigBlock block) {
+        void IConfig.Add(string key, IConfigBlock block) {
             if (_blocks.ContainsKey(key))
                 _blocks[key] = block;
             else
                 _blocks.Add(key, block);
         }
 
-        public IEnumerable<string> GetBlocks() {
+        IEnumerable<string> IConfig.GetBlocks() {
             return _blocks.Select(x => x.Key);
         }
     }
