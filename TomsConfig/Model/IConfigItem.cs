@@ -1,4 +1,4 @@
-﻿namespace TomsConfig {
+﻿namespace TomsConfig.Model {
     public interface IConfigItem {
         public bool Equals(ConfigItem item);
         
